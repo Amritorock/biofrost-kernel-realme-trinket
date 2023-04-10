@@ -18,16 +18,17 @@ IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
 
 # Naming Variables
 MIN_HEAD=$(git rev-parse HEAD | cut -c 1-7)
-export ZIP_NAME="$(cat version)-${MIN_HEAD}"
-export LOCALVERSION="~$(cat version)"
+export ZIP_NAME="$(cat biofrost-localversion)-${MIN_HEAD}"
+export LOCALVERSION="~$(cat biofrost-localversion)"
 
 # GitHub Variables
 export COMMIT_HASH=$(git rev-parse --short HEAD)
+export BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 export REPO_URL="https://github.com/mcdofrenchfreis/biofrost-kernel-realme-trinket"
 
 # Build Information
 export COMPILER_NAME="$("${TCDIR}/bin/clang" --version | sed -n '1{s/.*(based on //; s/)).*//; s/ (https.*//; p}')"
-export LINKER_NAME="$("${TCDIR}/bin/ld.lld" --version | awk 'NR==1{sub(/[(][^)]+[)]/, ""); print}')"
+export LINKER_NAME="$("${TCDIR}/bin/ld.lld" --version | grep LLD | sed -E 's/.* ([0-9.]+).*/LLD \1/')"
 export KBUILD_BUILD_USER=xevan
 export KBUILD_BUILD_HOST=R32.GTS-t
 export DEVICE="Realme 5 Series"
@@ -42,7 +43,6 @@ BOT_ID="5129489057:AAF5o-JfQ1iAUp9Min7Jcr9sHPjTpCaIlA8"
 
 sendinfo() {
   kernel_version=$(make kernelversion 2>/dev/null)
-  branch=$(git rev-parse --abbrev-ref HEAD)
   commit_details=$(git log --pretty=format:'%s' -1)
   message="<b>Laboratory Machine || CI Build Triggered</b>
 <b>Docker: </b><code>${DISTRO}</code>
@@ -53,8 +53,8 @@ sendinfo() {
 <b>Compiler: </b><code>${COMPILER_NAME}</code>
 <b>Linker: </b><code>${LINKER_NAME}</code>
 <b>Zip Name: </b><code>${ZIP_NAME}</code>
-<b>Branch: </b><code>${branch} (head)</code>
-<b>Last Commit Details: </b><a href='${REPO_URL}/commit/${COMMIT_HASH}'>${COMMIT_HASH}</a>
+<b>Branch: </b><code>${BRANCH_NAME} (head)</code>
+<b>Top Commit: </b><a href='${REPO_URL}/commit/${COMMIT_HASH}'>${COMMIT_HASH}</a>
 <code>(${commit_details})</code>"
   for CHAT_ID in "${LOG_ID[@]}"
   do
