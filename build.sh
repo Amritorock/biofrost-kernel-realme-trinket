@@ -13,7 +13,7 @@ git clone --depth=1 https://github.com/mcdofrenchfreis/AnyKernel3.git -b r5x Any
 # Main Variables
 DATE=$(TZ=Asia/Singapore date +"%a %b %d %r %Z %Y")
 BUILD_START=$(date +"%s")
-TCDIR=/home/biofrost/Development/Compiler/AndroidClang
+TCDIR=/home/biofrost/Development/Compiler/llvm-17.0.0-rc2
 DTBO=$(pwd)/out/arch/arm64/boot/dtbo.img
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
 
@@ -86,7 +86,6 @@ function compile() {
     make O=out ARCH=arm64 biofrost_defconfig
     export PATH="${TCDIR}/bin:${PATH}"
     export CROSS_COMPILE=aarch64-linux-gnu-
-    export CLANG_TRIPLE=aarch64-linux-gnu-
     export CROSS_COMPILE_ARM32=arm-linux-gnueabi-
     make -j$(nproc --all) O=out LLVM=1 LLVM-IAS=1
 
