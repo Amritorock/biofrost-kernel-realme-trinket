@@ -2254,8 +2254,8 @@ void mark_task_starting(struct task_struct *p)
 
 static inline void walt_update_group_thresholds(void)
 {
-	sched_group_upmigrate = pct_to_min_scaled(95);
-	sched_group_downmigrate = pct_to_min_scaled(85);
+	sched_group_upmigrate = pct_to_min_scaled(115);
+	sched_group_downmigrate = pct_to_min_scaled(90);
 }
 
 static void walt_cpus_capacity_changed(const cpumask_t *cpus)
