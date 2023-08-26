@@ -13,7 +13,7 @@ git clone --depth=1 https://github.com/mcdofrenchfreis/AnyKernel3.git -b r5x Any
 # Main Variables
 DATE=$(TZ=Asia/Singapore date +"%a %b %d %r %Z %Y")
 BUILD_START=$(date +"%s")
-TCDIR=/home/biofrost/Development/Compiler/llvm-17.0.0-rc2
+TCDIR=/home/biofrost/Development/Compiler/llvm-17.0.0-rc3
 DTBO=$(pwd)/out/arch/arm64/boot/dtbo.img
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
 
@@ -31,7 +31,7 @@ export REPO_URL="https://github.com/mcdofrenchfreis/biofrost-kernel-realme-trink
 export COMPILER_NAME="$(${TCDIR}/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
 export LINKER_NAME="$("${TCDIR}"/bin/ld.lld --version | head -n 1 | sed 's/(compatible with [^)]*)//' | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
 export KBUILD_BUILD_USER=xevan
-export KBUILD_BUILD_HOST=dizzy
+export KBUILD_BUILD_HOST=LineOfSeven
 export DEVICE="Realme 5 Series"
 export CODENAME="realme_trinket"
 export BUILD_TYPE="Bleeding-Edge"
